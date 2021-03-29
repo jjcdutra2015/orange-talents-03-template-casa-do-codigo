@@ -3,15 +3,16 @@ package br.com.zupacademy.juliodutra.casadocodigo.controller;
 import br.com.zupacademy.juliodutra.casadocodigo.AutorRepository;
 import br.com.zupacademy.juliodutra.casadocodigo.controller.dto.AutorDto;
 import br.com.zupacademy.juliodutra.casadocodigo.controller.dto.AutorForm;
+import br.com.zupacademy.juliodutra.casadocodigo.controller.dto.ProibidoEmailDuplicadoAutorValidator;
 import br.com.zupacademy.juliodutra.casadocodigo.model.Autor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 
@@ -19,8 +20,18 @@ import java.net.URI;
 @RequestMapping("/autores")
 public class AutorController {
 
-    @Autowired private AutorRepository autorRepository;
+    @Autowired
+    private AutorRepository autorRepository;
 
+    @Autowired
+    private ProibidoEmailDuplicadoAutorValidator proibidoEmailDuplicadoAutorValidator;
+
+    @InitBinder
+    public void init(WebDataBinder binder) {
+        binder.addValidators(proibidoEmailDuplicadoAutorValidator);
+    }
+
+    @Transactional
     @PostMapping
     public ResponseEntity<AutorDto> cadastrar(@Valid @RequestBody AutorForm form, UriComponentsBuilder uriBuilder) {
         Autor autor = form.converter();
