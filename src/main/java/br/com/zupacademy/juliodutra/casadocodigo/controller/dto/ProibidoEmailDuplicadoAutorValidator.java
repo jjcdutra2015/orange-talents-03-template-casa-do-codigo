@@ -1,6 +1,6 @@
 package br.com.zupacademy.juliodutra.casadocodigo.controller.dto;
 
-import br.com.zupacademy.juliodutra.casadocodigo.AutorRepository;
+import br.com.zupacademy.juliodutra.casadocodigo.repository.AutorRepository;
 import br.com.zupacademy.juliodutra.casadocodigo.model.Autor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
