@@ -1,8 +1,11 @@
 package br.com.zupacademy.juliodutra.casadocodigo.controller.dto;
 
+import br.com.zupacademy.juliodutra.casadocodigo.config.compartilhado.UniqueValue;
 import br.com.zupacademy.juliodutra.casadocodigo.model.Autor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class AutorForm {
 
@@ -11,6 +14,7 @@ public class AutorForm {
 
     @NotBlank
     @Email
+    @UniqueValue(domainClass = Autor.class, fieldName = "email")
     private String email;
 
     @NotBlank
