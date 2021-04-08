@@ -9,23 +9,14 @@ import java.time.LocalDate;
 public class LivroDto {
 
     private Long id;
-
     private String titulo;
-
     private String resumo;
-
     private String sumario;
-
     private Double preco;
-
     private Integer paginas;
-
     private String isbn;
-
     private LocalDate dataPublicacao;
-
     private Categoria categoria;
-
     private Autor autor;
 
     public LivroDto(Livro livro) {

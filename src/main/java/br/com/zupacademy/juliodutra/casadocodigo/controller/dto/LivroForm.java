@@ -15,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class LivroForm {
 
@@ -75,21 +76,21 @@ public class LivroForm {
     }
 
     public Livro converter(CategoriaRepository categoriaRepository, AutorRepository autorRepository) throws Exception {
-        Categoria possivelCategoria = categoriaRepository.findById(categoriaId).get();
+        Optional<Categoria> possivelCategoria = categoriaRepository.findById(categoriaId);
 
-        if (possivelCategoria == null) {
+        if (!possivelCategoria.isPresent()) {
             throw new Exception("Categoria não cadastrada");
         }
 
-        Autor possivelAutor = autorRepository.findById(autorId).get();
-        if (possivelAutor == null) {
+        Optional<Autor> possivelAutor = autorRepository.findById(autorId);
+        if (!possivelAutor.isPresent()) {
             throw new Exception("Autor não cadastrado");
         }
 
 
         Livro livro = new Livro(
                 this.titulo, this.resumo, this.sumario, this.preco,
-                this.paginas, this.isbn, this.dataPublicacao, possivelCategoria, possivelAutor);
+                this.paginas, this.isbn, this.dataPublicacao, possivelCategoria.get(), possivelAutor.get());
 
         return livro;
     }
